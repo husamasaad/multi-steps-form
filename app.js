@@ -7,6 +7,7 @@ const goBack = document.getElementById('go-back');
 const title = document.getElementById('step-title');
 const stepInfo = document.getElementById('step-info');
 const steps = [...document.querySelectorAll('.step-i')];
+const chng = document.getElementById('change');
 
 // for step 1
 const personalInfo = [...document.querySelectorAll('.step-1')];
@@ -93,10 +94,12 @@ function goNext() {
 
 // updating data
 function updateData() {
+  submit.textContent = "Next step";
   switch (currentStep){
     case 1:
       title.textContent = "Select your plan";
       stepInfo.textContent = "you have the option of monthly or yearly billing.";
+      goBack.style.visibility = "visible";
       break;
     case 2:
       title.textContent = "Pick add-ons";
@@ -374,3 +377,52 @@ function updateSumm() {
       stepForm.appendChild(lastbox);
 }
 
+// change button
+chng.addEventListener('click', reseting);
+
+function reseting() {
+  let stepForm = document.getElementById("step-4");
+  forms[currentStep].classList.remove('active');
+  steps[currentStep].classList.remove('active');
+  stepForm.innerHTML = `
+  <div class="box">
+  <div class="text">
+    <span id="result-plan" class="f-plan">Arcade (Monthly)</span>
+    <span id="change">Change</span>
+  </div>
+  <span class="f-price">$90/yr</span>
+</div>
+  `;
+  document.getElementById('change').addEventListener('click', reseting);
+  currentStep = 0;
+  goNext();
+}
+
+// Go back btn
+goBack.onclick = () => {
+  console.log('hi');
+  forms[currentStep].classList.remove('active');
+  steps[currentStep].classList.remove('active');
+  currentStep--;
+  if (currentStep >= 0) {
+    forms[currentStep].classList.add('active');
+    if (currentStep < forms.length-1){
+      steps[currentStep].classList.add('active');
+    }
+    if (currentStep == 0) {
+      goBack.style.visibility = "hidden";
+    }
+    let stepForm = document.getElementById("step-4");
+    stepForm.innerHTML = `
+    <div class="box">
+      <div class="text">
+        <span id="result-plan" class="f-plan">Arcade (Monthly)</span>
+        <span id="change">Change</span>
+      </div>
+      <span class="f-price">$90/yr</span>
+    </div>
+    `;
+    document.getElementById('change').addEventListener('click', reseting);
+    updateData();
+  }
+}

@@ -437,8 +437,10 @@ input.step-1::placeholder {
   margin-bottom: 3px;
 }
 
-.text > a {
+.text  #change {
   color: var(--clr-txt-main);
+  text-decoration: underline;
+  cursor: pointer;
 }
 
 .f-price {
@@ -516,6 +518,7 @@ footer #go-back {
   color: var(--clr-txt-main);
   background-color: transparent;
   visibility: hidden;
+  cursor: pointer;
 }
 
 /* End of forms */
